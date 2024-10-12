@@ -1,7 +1,7 @@
 import React from 'react'
-import NavbarMain from '../components/NavbarMain'
-import BottomNav from '../components/BottomNav'
-import LandingView from '../components/LandingView'
+import NavbarMain from '../Navigation/NavbarMain'
+import BottomNav from '../Navigation/BottomNav'
+import LandingView from '../Views/LandingView'
 
 const Landing = () => {
   return (
