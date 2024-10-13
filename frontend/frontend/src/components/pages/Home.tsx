@@ -1,7 +1,7 @@
-import React from 'react'
-import NavbarMain from '../components/NavbarMain'
-import MainView from '../components/MainView'
-import BottomNav from '../components/BottomNav'
+import NavbarMain from '../Navigation/NavbarMain'
+import MainView from '../Views/MainView'
+import BottomNav from '../Navigation/BottomNav'
+
 
 const Home = () => {
   return (
