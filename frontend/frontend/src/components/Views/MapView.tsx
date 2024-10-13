@@ -46,6 +46,7 @@ const MapView: React.FC = () => {
   ) => {
     if (reason === "clickaway") {
       return;
+      console.log(event);
     }
 
     setOpen(false);
