@@ -2,7 +2,6 @@ import heapq
 import requests
 
 # Azure OpenAI Setup
-#API_URL = "https://tbalt-m26rg8w4-swedencentral.openai.azure.com/openai/deployments/davinci-002/chat/completions?api-version=2024-02-01"
 API_URL = "https://tbalt-m26rg8w4-swedencentral.openai.azure.com/openai/deployments/davinci-002/completions?api-version=2024-06-01"
 API_KEY = "0529c2f50a1d413fbd1e57d67f5e3f59"
 
@@ -100,9 +99,28 @@ def generate_instructions_from_route(route):
     if not route or route == "No safe route found":
         return "No safe route available. Please remain in place and await further instructions."
 
-    # Prepare prompt with neutral language to avoid triggering the content filter
-    route_description = " -> ".join([f"({x},{y})" for x, y in route])
-    prompt = f"Provide step-by-step walking directions for the following locations in a building: {route_description}. The directions should be clear and easy to understand."
+    # Convert route (list of coordinates) to a description of movements
+    movement_instructions = []
+    for i in range(1, len(route)):
+        current_pos = route[i-1]
+        next_pos = route[i]
+        
+        if next_pos[0] > current_pos[0]:
+            movement_instructions.append("Move down")
+        elif next_pos[0] < current_pos[0]:
+            movement_instructions.append("Move up")
+        elif next_pos[1] > current_pos[1]:
+            movement_instructions.append("Move right")
+        elif next_pos[1] < current_pos[1]:
+            movement_instructions.append("Move left")
+
+    # Prepare the instructions in a way the AI can enhance
+    route_description = "\n".join([f"Step {i+1}: {instruction}" for i, instruction in enumerate(movement_instructions)])
+    
+    prompt = (
+        f"Based on the following path, provide clear and concise walking directions:\n\n{route_description}. "
+        "These instructions should be easy to follow for someone navigating the building, explaining key movements step by step."
+    )
 
     # Send the request to Azure OpenAI API
     headers = {
@@ -111,9 +129,10 @@ def generate_instructions_from_route(route):
     }
     data = {
         "prompt": prompt,
-        "max_tokens": 250,  # Increased token limit for more instructions
-        "temperature": 0.7,
-        "top_p": 0.9
+        "max_tokens": 150,  # Keep it concise
+        "temperature": 0.5,  # Slightly higher temperature for natural responses
+        "top_p": 0.9,
+        "stop": ["\n\n", "\n", ".", "!"]  # Stop sequence for clarity
     }
 
     response = requests.post(API_URL, headers=headers, json=data)
@@ -125,8 +144,10 @@ def generate_instructions_from_route(route):
     if response.status_code == 200:
         try:
             result = response.json()
-            print(f"Full API response: {result}")  # Print the entire response for debugging
-            return result['choices'][0]['text'].strip()  # Return generated text
+
+            # Return the generated text, trimming unnecessary content
+            return result['choices'][0]['text'].strip()
+
         except (KeyError, IndexError) as e:
             print(f"Error in processing API response: {e}")
             return "Error processing instructions from API response."
@@ -140,7 +161,7 @@ def test_simple_prompt():
         'api-key': API_KEY
     }
     data = {
-        "prompt": "Give me step-by-step walking directions in a building.",
+        "prompt": "Give me step-by-step walking directions in a building, formatted as simple, clear bullet points.",
         "max_tokens": 100
     }
 
