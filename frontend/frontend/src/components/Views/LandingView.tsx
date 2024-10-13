@@ -1,9 +1,9 @@
-import React, { useState, FormEvent } from 'react';
-import Button from '../Button'
-import { Link } from 'react-router-dom'; // Import Link component
+import React, { useState, FormEvent } from "react";
+import Button from "../Buttons/Button";
+import { Link } from "react-router-dom"; // Import Link component
 
 const LandingView = () => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -23,25 +23,37 @@ const LandingView = () => {
       <section className="max-w-3xl mx-auto text-center mb-12">
         <h2 className="text-3xl font-semibold">About Our App</h2>
         <p className="mt-4">
-          Our Fire Safety Navigator app is designed to help you find the safest and shortest route out of a building during a fire. 
-          With real-time pathfinding and hazard detection, you can navigate with confidence and ensure your safety.
+          Our Fire Safety Navigator app is designed to help you find the safest
+          and shortest route out of a building during a fire. With real-time
+          pathfinding and hazard detection, you can navigate with confidence and
+          ensure your safety.
         </p>
       </section>
 
       <section className="max-w-3xl mx-auto text-center mb-12">
         <h2 className="text-3xl font-semibold">Features</h2>
         <ul className="mt-4 list-disc list-inside">
-          <li>🔍 <strong>Shortest Path</strong>: Find the quickest escape route from your current location.</li>
-          <li>🚧 <strong>Hazard Alerts</strong>: Receive real-time notifications about hazards on your path.</li>
-          <li>📍 <strong>Location Tracking</strong>: Keep track of your location within the building.</li>
-          <li>💡 <strong>Emergency Tips</strong>: Get helpful tips and reminders for staying safe during a fire.</li>
-          <li>📞 <strong>Emergency Contacts</strong>: Access emergency contacts quickly in case of an emergency.</li>
+          <li>
+            🔍 <strong>Shortest Path</strong>: Find the quickest escape route
+            from your current location.
+          </li>
+          <li>
+            🚧 <strong>Hazard Alerts</strong>: Receive real-time notifications
+            about hazards on your path.
+          </li>
+
+          <li>
+            📞 <strong>Emergency Contacts</strong>: Access emergency contacts
+            quickly in case of an emergency.
+          </li>
         </ul>
       </section>
 
       <section className="max-w-3xl mx-auto text-center mb-12">
         <h2 className="text-3xl font-semibold">Get Started</h2>
-        <p className="mt-4">Enter your name to begin your journey towards safety:</p>
+        <p className="mt-4">
+          Enter your name to begin your journey towards safety:
+        </p>
         <form onSubmit={handleSubmit} className="mt-4">
           <input
             type="text"
@@ -52,17 +64,17 @@ const LandingView = () => {
             required
           />
           <Link to="/home">
-          <button type="submit" className="ml-2 p-2 bg-white text-red-500 rounded-md hover:bg-gray-300 transition"
-          >
-            Submit
-          </button>
+            <button
+              type="submit"
+              className="ml-2 p-2 bg-white text-red-500 rounded-md hover:bg-gray-300 transition"
+            >
+              Submit
+            </button>
           </Link>
         </form>
       </section>
-
-      
     </div>
   );
 };
 
-export default LandingView
+export default LandingView;
