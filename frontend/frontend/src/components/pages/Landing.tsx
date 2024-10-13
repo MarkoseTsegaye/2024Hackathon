@@ -1,20 +1,18 @@
-import React from 'react'
-import NavbarMain from '../Navigation/NavbarMain'
-import BottomNav from '../Navigation/BottomNav'
-import LandingView from '../Views/LandingView'
+import NavbarMain from "../Navigation/NavbarMain";
+import LandingView from "../Views/LandingView";
+import "../fonts.css";
 
 const Landing = () => {
   return (
     <>
-    <div className='h-screen'>
-    <div className='w-full h-full flex flex-col'>
-      < NavbarMain />
-      <LandingView />
-      
-      </div>
+      <div className="h-screen instrument-sans-bold">
+        <div className="w-full h-full flex flex-col">
+          <NavbarMain />
+          <LandingView />
+        </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

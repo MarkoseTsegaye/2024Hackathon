@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../Buttons/Button";
 
 const AccountView = () => {
@@ -7,7 +8,9 @@ const AccountView = () => {
         <Button title="Profile"></Button>
         <Button title="Settings"></Button>
         <Button title="Contact Us"></Button>
-        <Button title="Logout"></Button>
+        <Link to="/">
+          <Button title="Logout"></Button>
+        </Link>
       </div>
     </div>
   );
